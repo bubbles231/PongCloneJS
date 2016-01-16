@@ -234,7 +234,16 @@ function calculateMousePos(event) {
 function myGame() {
     "use strict";
     console.log("Hello, world!");
+    
     myCanvas.addEventListener('mousedown', function (event) {
+        if (showingWinScreen) {
+            player1Score = 0;
+            player2Score = 0;
+            showingWinScreen = false;
+        }
+    });
+
+    myCanvas.addEventListener('touchstart', function (event) {
         if (showingWinScreen) {
             player1Score = 0;
             player2Score = 0;
@@ -246,6 +255,12 @@ function myGame() {
         var mousePos = calculateMousePos(event);
         paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
     });
+    
+    myCanvas.addEventListener('touchmove', function (event) {
+        var touchPos = calculateMousePos(event);
+        paddle1Y = touchPos.y - (PADDLE_HEIGHT / 2);
+    });
+
     reset();
     drawStuff();
     setInterval(callBoth, (1000 / fps));

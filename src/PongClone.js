@@ -1,8 +1,11 @@
 /*jslint indent: 4, maxlen: 80, devel: true*/
-var myCanvas = document.getElementById('gameCanvas');
-var myCanvasContext = myCanvas.getContext('2d');
+var myCanvas;
+var myCanvasContext;
 var fps = 60;
 var SCREEN_LEFT = 0;
+var viewport = {};
+viewport.width = 0;
+viewport.height = 0;
 // Ball Variables
 var ballX = 50;
 var ballY = 100;
@@ -230,11 +233,34 @@ function calculateMousePos(event) {
 }
 
 
+function checkScreenSize() {
+    "use strict";
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    if (viewport.width !== w || viewport.height !== h) {
+        viewport.width = w;
+        viewport.height = h;
+        console.log("Viewport changed to: " + viewport.width + " " + viewport.height);
+        myCanvas.width = myCanvas.clientWidth;
+        myCanvas.height = myCanvas.clientHeight;        
+    }
+}
+
+
 // Main game function, called when window is loaded
 function myGame() {
     "use strict";
+    var checkScreenSizeID; 
+    var callBothID;
+    myCanvas = document.getElementById('gameCanvas');
+    myCanvas.width = myCanvas.clientWidth;
+    myCanvas.height = myCanvas.clientHeight;
+    myCanvasContext = myCanvas.getContext('2d');
     console.log("Hello, world!");
-    
+    console.log("Canvas size: " + myCanvas.width + ", " + myCanvas.height);
+
+    checkScreenSizeID = setInterval(checkScreenSize, 250);
+
     myCanvas.addEventListener('mousedown', function (event) {
         if (showingWinScreen) {
             player1Score = 0;
@@ -263,7 +289,7 @@ function myGame() {
 
     reset();
     drawStuff();
-    setInterval(callBoth, (1000 / fps));
+    callBothID = setInterval(callBoth, (1000 / fps));
 }
 
 // Load the game when the page is loaded

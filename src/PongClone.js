@@ -61,13 +61,29 @@ function colorRect(x, y, width, height, color) {
 function paddleAI() {
     "use strict";
     var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+    // Make right paddle wait to move for a little bit
+    if (ballX < (myCanvas.width / 2) - 200) {
+        return;
+    }
     // Is paddle above the ball?
+    // Is ball below the paddle?
     if (paddle2YCenter < ballY + ballRadius + ballSpeedY) {
-        paddle2Y += 5;
-        // Is paddle below the ball?
+        // Smooth the movement (Hacky :P)
+        if (ballSpeedY > 3) {
+            paddle2Y += 6.5;
+        } else {
+            paddle2Y += 1;
+        }
+    // Is paddle below the ball?
+    // Is ball above the paddle?
     } else if ((paddle2YCenter + PADDLE_HEIGHT >
                 ballY + ballRadius + ballSpeedY)) {
-        paddle2Y -= 5;
+        // Smooth the movement (Hacky :P)
+        if (ballSpeedY < -3) {
+            paddle2Y -= 6.5;
+        } else {
+            paddle2Y -= 1;
+        }
     }
 }
 

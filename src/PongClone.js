@@ -140,7 +140,7 @@ function updateStuff() {
     var deltaY;
     // Move paddle2
     paddleAI();
-
+    
     // Test if ball hit right wall
     if (ballX > myCanvas.width - ballRadius) {
         player1Score += 1;
@@ -280,31 +280,31 @@ function myGame() {
     });
 
     myCanvas.addEventListener('mousemove', function (event) {
-      var mousePos = calculateMousePos(event);
-      if (mousePos.y < PADDLE_HEIGHT) {
-        mousePos.y -= 15;
-      }
-      paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
-      // See if paddle1Y is going offscreen at the top
-      if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
-        paddle1Y = myCanvas.height - PADDLE_HEIGHT;
+        var mousePos = calculateMousePos(event);
+        if (mousePos.y < PADDLE_HEIGHT) {
+            mousePos.y -= 15;
+        }
+        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+        // See if paddle1Y is going offscreen at the top
+        if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
+            paddle1Y = myCanvas.height - PADDLE_HEIGHT;
         // See if paddle1Y is going offscreen on the bottom
-      } else if (paddle1Y < SCREEN_LEFT) {
-        paddle1Y =  0;
-      }
+        } else if (paddle1Y < SCREEN_LEFT) {
+            paddle1Y =  0;
+        }
     });
 
-  myCanvas.addEventListener('touchmove', function (event) {
-    var touchPos = calculateMousePos(event);
-    paddle1Y = touchPos.y - (PADDLE_HEIGHT / 2);
-    // See if paddle1Y is going offscreen at the top
-    if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
-      paddle1Y = myCanvas.height - PADDLE_HEIGHT;
-      // See if paddle1Y is going offscreen on the bottom
-    } else if (paddle1Y < SCREEN_LEFT) {
-      paddle1Y =  0;
-    }
-  });
+    myCanvas.addEventListener('touchmove', function (event) {
+        var touchPos = calculateMousePos(event);
+        paddle1Y = touchPos.y - (PADDLE_HEIGHT / 2);
+        // See if paddle1Y is going offscreen at the top
+        if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
+            paddle1Y = myCanvas.height - PADDLE_HEIGHT;
+        // See if paddle1Y is going offscreen on the bottom
+        } else if (paddle1Y < SCREEN_LEFT) {
+            paddle1Y =  0;
+        }
+    });
 
     reset();
     drawStuff();

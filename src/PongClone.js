@@ -55,7 +55,7 @@ function colorRect(x, y, width, height, color) {
     myCanvasContext.fillStyle = color;
     myCanvasContext.fillRect(x, y, width, height);
 }
-       
+
 
 // AI for paddle 2
 function paddleAI() {
@@ -72,7 +72,7 @@ function paddleAI() {
 }
 
 
-        
+
 // drawNet
 function drawNet() {
     "use strict";
@@ -97,12 +97,12 @@ function drawStuff() {
               PADDLE_HEIGHT, 'grey');
     // Draw ball
     colorCircle(ballX, ballY, ballRadius, ballColor);
-    
+
     // Draw score
     myCanvasContext.fillText(player1Score, 100, 100);
     myCanvasContext.fillText(player2Score, myCanvas.width - 100, 100);
 }
-        
+
 
 // Function to reset ball at the center, reverse the ball velocity
 function ballReset() {
@@ -171,7 +171,7 @@ function updateStuff() {
     } else if (ballSpeedY < -8) {
         ballSpeedY = -8;
     }
-        
+
     // Test if ball hit bottom
     if (ballY > myCanvas.height - ballRadius) {
         ballSpeedY = -ballSpeedY;
@@ -194,7 +194,7 @@ function updateStuff() {
     } else if (paddle2Y < SCREEN_LEFT) {
         paddle2Y =  0;
     }
-            
+
     // Update the ballX and ballY values, ball coordinates
     ballX += ballSpeedX;
     ballY += ballSpeedY;
@@ -278,16 +278,33 @@ function myGame() {
             showingWinScreen = false;
         }
     });
-    
+
     myCanvas.addEventListener('mousemove', function (event) {
-        var mousePos = calculateMousePos(event);
-        paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+      var mousePos = calculateMousePos(event);
+      if (mousePos.y < PADDLE_HEIGHT) {
+        mousePos.y -= 15;
+      }
+      paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
+      // See if paddle1Y is going offscreen at the top
+      if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
+        paddle1Y = myCanvas.height - PADDLE_HEIGHT;
+        // See if paddle1Y is going offscreen on the bottom
+      } else if (paddle1Y < SCREEN_LEFT) {
+        paddle1Y =  0;
+      }
     });
-    
-    myCanvas.addEventListener('touchmove', function (event) {
-        var touchPos = calculateMousePos(event);
-        paddle1Y = touchPos.y - (PADDLE_HEIGHT / 2);
-    });
+
+  myCanvas.addEventListener('touchmove', function (event) {
+    var touchPos = calculateMousePos(event);
+    paddle1Y = touchPos.y - (PADDLE_HEIGHT / 2);
+    // See if paddle1Y is going offscreen at the top
+    if (paddle1Y > myCanvas.height - PADDLE_HEIGHT) {
+      paddle1Y = myCanvas.height - PADDLE_HEIGHT;
+      // See if paddle1Y is going offscreen on the bottom
+    } else if (paddle1Y < SCREEN_LEFT) {
+      paddle1Y =  0;
+    }
+  });
 
     reset();
     drawStuff();

@@ -23,7 +23,7 @@ var ballSpeedY = 4;
 // Paddle Variables
 // const PADDLE_HEIGHT = 100;
 // const PADDLE_WIDTH = 10;
-var PADDLE_HEIGHT = 100;
+var PADDLE_HEIGHT = 120;
 var PADDLE_WIDTH = 10;
 var paddle1Y = 250;
 var paddle2Y = 250;
@@ -235,14 +235,17 @@ function calculateMousePos(event) {
 
 function checkScreenSize() {
     "use strict";
-    var w = window.innerWidth;
-    var h = window.innerHeight;
+    var h, w;
+    w = window.innerWidth;
+    h = window.innerHeight;
     if (viewport.width !== w || viewport.height !== h) {
         viewport.width = w;
         viewport.height = h;
-        console.log("Viewport changed to: " + viewport.width + " " + viewport.height);
+        // console.log("Viewport changed to: " + viewport.width + " " +
+        //             viewport.height);
         myCanvas.width = myCanvas.clientWidth;
-        myCanvas.height = myCanvas.clientHeight;        
+        myCanvas.height = myCanvas.clientHeight;
+        ballReset();
     }
 }
 
@@ -250,14 +253,13 @@ function checkScreenSize() {
 // Main game function, called when window is loaded
 function myGame() {
     "use strict";
-    var checkScreenSizeID; 
-    var callBothID;
+    var checkScreenSizeID, callBothID;
     myCanvas = document.getElementById('gameCanvas');
     myCanvas.width = myCanvas.clientWidth;
     myCanvas.height = myCanvas.clientHeight;
     myCanvasContext = myCanvas.getContext('2d');
     console.log("Hello, world!");
-    console.log("Canvas size: " + myCanvas.width + ", " + myCanvas.height);
+    // console.log("Canvas size: " + myCanvas.width + ", " + myCanvas.height);
 
     checkScreenSizeID = setInterval(checkScreenSize, 250);
 
